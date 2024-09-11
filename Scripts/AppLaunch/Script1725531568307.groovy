@@ -1,3 +1,4 @@
+
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
@@ -27,6 +28,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
 'APPLICATION LAUNCH : '
 Mobile.startApplication(GlobalVariable.APK, true)
+
 
 ApplicationLaunch()
 
