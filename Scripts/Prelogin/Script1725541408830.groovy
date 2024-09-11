@@ -26,6 +26,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
 PreLogin()
 
+
 def PreLogin() {
     if (Mobile.waitForElementPresent(findTestObject('Prelogin/android.widget.TextView - Lang EN'), 10, FailureHandling.OPTIONAL)
 		||Mobile.waitForElementPresent(findTestObject('Prelogin/android.widget.TextView - Next'), 10, FailureHandling.OPTIONAL)) {
