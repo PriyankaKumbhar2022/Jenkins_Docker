@@ -29,6 +29,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 'APPLICATION LAUNCH : '
 Mobile.startApplication(GlobalVariable.APK, true)
 
+
 ApplicationLaunch()
 
 def ApplicationLaunch() {
