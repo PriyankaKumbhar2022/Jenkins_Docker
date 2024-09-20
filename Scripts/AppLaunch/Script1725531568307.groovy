@@ -32,7 +32,6 @@ Mobile.startApplication(GlobalVariable.APK, true)
 
 ApplicationLaunch()
 
-
 def ApplicationLaunch() {
     if (Mobile.waitForElementPresent(findTestObject('Prelogin/android.widget.TextView - Lang EN'), 10, FailureHandling.OPTIONAL)
 		||Mobile.waitForElementPresent(findTestObject('Prelogin/android.widget.TextView - Next'), 10, FailureHandling.OPTIONAL)) {
