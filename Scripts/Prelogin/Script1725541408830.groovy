@@ -31,7 +31,6 @@ def PreLogin() {
 		||Mobile.waitForElementPresent(findTestObject('Prelogin/android.widget.TextView - Next'), 10, FailureHandling.OPTIONAL)) {
         KeywordUtil.markPassed('Prelogin screens display Successfully')
 
-
 		for (int i=0;i>=2;i++) {
         Mobile.tap(findTestObject('Prelogin/android.widget.TextView - Next'), 5, FailureHandling.OPTIONAL)
 		}
