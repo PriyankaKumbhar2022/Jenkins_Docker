@@ -9,9 +9,10 @@
         KATALON_STUDIO_ENGINE = 'C:/Users/Dell/Downloads/Katalon_Studio_Engine_Windows_64-9.6.0/Katalon_Studio_Engine_Windows_64-9.6.0'
     }
     stages {
-        stage('Checkout') {
+        stage('Checkout/PullCode') {
             steps {
-                git branch: "${params.BRANCH_NAME}", url: "${params.REPO_URL}"
+                git branch: "${params.BRANCH_NAME}", credentialsId: 'MY_API_KEY', url: "${params.REPO_URL}"
+                echo 'Pull successfully .'
             }
         }
         stage("API key") {
@@ -30,12 +31,7 @@
                 }
             }
         }
-        stage('PullCode') {
-            steps {
-                git branch: 'feature/Priyanka', credentialsId: 'd81cca46-fbfd-4f68-ae91-eafa2124d7a0', url: 'https://github.com/PriyankaKumbhar2022/Jenkins_Docker.git'
-                echo 'Pull successfully .'
-            }
-        }
+        
         stage('TestSuitExecution') {
             steps {
                 withCredentials([string(credentialsId: 'MY_API_KEY', variable: 'API_KEY')]) {
@@ -52,37 +48,8 @@
     always {
         echo 'One way or another, I have finished'
     }
-    success {
-        emailext(
-            subject: "Build Successful: ${currentBuild.fullDisplayName}",
-            body: "Good news! The build was successful.\nCheck console output at ${env.BUILD_URL} to view the results.",
+    emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             to: 'kumbharpriyanka043@gmail.com'
-        )
-        echo 'Build succeeded!'
-    }
-    failure {
-        emailext(
-            subject: "Build Failed: ${currentBuild.fullDisplayName}",
-            body: "Unfortunately, the build has failed.\nCheck console output at ${env.BUILD_URL} to view the results.",
-            to: 'kumbharpriyanka043@gmail.com'
-        )
-        echo 'Build failure!'
-    }
-    unstable {
-        emailext(
-            subject: "Build Successful: ${currentBuild.fullDisplayName}",
-            body: "The Build is unstable.\nCheck console output at ${env.BUILD_URL} to view the results.",
-            to: 'kumbharpriyanka043@gmail.com'
-        )
-             echo 'Build Unstable!'  
-    }  
-    changed {  
-        emailext(
-            subject: "Build Successful: ${currentBuild.fullDisplayName}",
-            body: "The state of the Pipeline has changed.\nCheck console output at ${env.BUILD_URL} to view the results.",
-            to: 'kumbharpriyanka043@gmail.com'
-        )
-             echo 'The Pipeline was previously failing but is now successful'  
-         }  
     }
 }
