@@ -59,12 +59,12 @@ pipeline {
                 <html>
                 <body>
                     <p>Hi Team</p>
-                    <h1>The updated Pushed Code Build Result: ${currentBuild.currentResult}</h1>
+                    <h4>The updated Pushed Code Build Result: ${currentBuild.currentResult}</h4>
                     <p><strong>Job Name:</strong> ${env.JOB_NAME}</p>
                     <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
                     <p><strong>More info at:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
 
-                    <h2>Commit Messages:</h2>
+                    <h5>Commit Messages:</h5>
                     <ul>
                         ${changes}
                     </ul>
