@@ -57,10 +57,7 @@ pipeline {
         def emailBody = """ 
             <html>
             <body>
-
-                <p>Hi Team</p>
-
-                <h2>For the updated code Build Result is: ${currentBuild.currentResult}</h2>
+                <h2>Build Result: ${currentBuild.currentResult}</h2>
                 <p><strong>Job Name:</strong> ${env.JOB_NAME}</p>
                 <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
                 <p><strong>More info at:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
@@ -81,4 +78,5 @@ pipeline {
         )
     }
 }
+
 }
