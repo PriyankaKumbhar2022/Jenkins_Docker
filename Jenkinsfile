@@ -72,7 +72,7 @@ pipeline {
                 body: emailBody,
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 to: 'Priyankak@siddhatech.com',
-                from: "Estrella Devops priyanka158725@gmail.com",
+                from: "Estrella Devops <priyanka158725@gmail.com>",
                 mimeType: 'text/html'  // Specify that the body is HTML
             )
         }
