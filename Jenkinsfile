@@ -66,7 +66,6 @@ pipeline {
                 ${changes}
             """
 
-
             emailext(
                 body: emailBody,
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
