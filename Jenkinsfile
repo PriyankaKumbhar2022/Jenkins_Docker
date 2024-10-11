@@ -42,12 +42,6 @@
                 }
             }
         }
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                // Your build steps here
-            }
-        }
     }
  
     post {
