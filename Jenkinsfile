@@ -43,40 +43,33 @@ pipeline {
         }
     }
    post {
-    always {
-        echo 'One way or another, I have finished'
+        always {
+            echo 'One way or another, I have finished'
 
-        // Initialize changes variable
-        def changes = currentBuild.changeSets.collect { changeSet ->
-            changeSet.items.collect { item ->
-                "<li>Commit: ${item.commitId} - Message: ${item.msg}</li>"
-            }
-        }.flatten().join('\n')  // Collect commit messages
+            // Initialize changes variable
+            def changes = currentBuild.changeSets.collect { changeSet ->
+                changeSet.items.collect { item ->
+                    "Commit: ${item.commitId} - Message: ${item.msg}"
+                }
+            }.flatten().join('\n')  // Collect commit messages
 
-        // Construct email body with HTML
-        def emailBody = """ 
-            <html>
-            <body>
-                <h2>For the updated code Build Result: ${currentBuild.currentResult}</h2>
-                <p><strong>Job Name:</strong> ${env.JOB_NAME}</p>
-                <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
-                <p><strong>More info at:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+            // Construct email body
+            def emailBody = """ 
+                Build Result: ${currentBuild.currentResult}
+                Job Name: ${env.JOB_NAME}
+                Build Number: ${env.BUILD_NUMBER}
+                More info at: ${env.BUILD_URL}
 
-                <h3>Commit Messages:</h3>
-                <ul>
-                    ${changes}
-                </ul>
-            </body>
-            </html>
-        """
+                Commit Messages:
+                ${changes}
+            """
 
-        emailext(
-            body: emailBody,
-            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            to: 'kumbharpriyanka043@gmail.com',
-            mimeType: 'text/html'  // Specify that the body is HTML
-        )
+            emailext(
+                body: emailBody,
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                to: 'kumbharpriyanka043@gmail.com'
+            )
+        }
     }
-}
 
 }
