@@ -64,10 +64,7 @@ pipeline {
                     <p>Build Number: ${env.BUILD_NUMBER}</p>
                     <p>More info at: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
 
-                    <h5>Commit Messages:</h5>
-                    <ul>
-                        ${changes}
-                    </ul>
+                    <h5>Commit Messages: ${changes}</h5>
                 </body>
                 </html>
             """
