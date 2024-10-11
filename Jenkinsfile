@@ -37,7 +37,7 @@
                 withCredentials([string(credentialsId: 'MY_API_KEY', variable: 'API_KEY')]) {
                 bat """
                 cd ${env.KATALON_STUDIO_ENGINE}
-                katalonc -noSplash -runMode=console -projectPath="${env.KATALON_PROJECT_PATH}" -retry=0 -testSuitePath="Test Suites/TS_Prelogin1" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="${API_KEY}"
+                katalonc -noSplash -runMode=console -projectPath="${env.KATALON_PROJECT_PATH}" -retry=0 -testSuitePath="Test Suites/TS_Prelogin" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="${API_KEY}"
                 """
                 }
             }
