@@ -63,8 +63,7 @@ pipeline {
                     <p>Job Name: ${env.JOB_NAME}</p>
                     <p>Build Number: ${env.BUILD_NUMBER}</p>
                     <p>More info at: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-
-                    <h5>Commit Messages: ${changes}</h5>
+                    <p>Commit Messages: ${changes}</p>
                 </body>
                 </html>
             """
@@ -73,6 +72,7 @@ pipeline {
                 body: emailBody,
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 to: 'Priyankak@siddhatech.com',
+                from: 'priyanka158725@gmail.com'
                 mimeType: 'text/html'  // Specify that the body is HTML
             )
         }
