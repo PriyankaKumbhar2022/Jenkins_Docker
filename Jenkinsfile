@@ -46,6 +46,8 @@ pipeline {
         always {
             echo 'One way or another, I have finished'
 
+
+        script {
             // Initialize changes variable
             def changes = currentBuild.changeSets.collect { changeSet ->
                 changeSet.items.collect { item ->
@@ -69,6 +71,7 @@ pipeline {
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 to: 'kumbharpriyanka043@gmail.com'
             )
+        }
         }
     }
 }
