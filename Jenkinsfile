@@ -58,7 +58,7 @@
         }.flatten().join('\n')  // Collect commit messages
 
         // Construct email body
-        def emailBody = """
+        def emailBody = """ 
             Build Result: ${currentBuild.currentResult}
             Job Name: ${env.JOB_NAME}
             Build Number: ${env.BUILD_NUMBER}
@@ -66,9 +66,6 @@
 
             Commit Messages:
             ${changes}
-
-            Last 100 Lines of Build Log:
-            ${buildLog}
         """
 
 
