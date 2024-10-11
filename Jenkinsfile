@@ -1,10 +1,10 @@
-  pipeline {
+pipeline {
     agent any
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'feature/Priyanka', description: 'Branch to build')
         string(name: 'REPO_URL', defaultValue: 'https://github.com/PriyankaKumbhar2022/Jenkins_Docker.git', description: 'Repository URL')
     }
-     environment {
+    environment {
         KATALON_PROJECT_PATH = 'D:/JenkinsDocker/Jenkins_Docker/EStrella/EStrella.prj' 
         KATALON_STUDIO_ENGINE = 'C:/Users/Dell/Downloads/Katalon_Studio_Engine_Windows_64-9.6.0/Katalon_Studio_Engine_Windows_64-9.6.0'
     }
@@ -12,7 +12,7 @@
         stage('Checkout/PullCode') {
             steps {
                 git branch: "${params.BRANCH_NAME}", credentialsId: 'MY_API_KEY', url: "${params.REPO_URL}"
-                echo 'Pull successfully .'
+                echo 'Pull successfully.'
             }
         }
         stage("API key") {
@@ -31,44 +31,38 @@
                 }
             }
         }
-        
         stage('TestSuitExecution') {
             steps {
                 withCredentials([string(credentialsId: 'MY_API_KEY', variable: 'API_KEY')]) {
-                bat """
-                cd ${env.KATALON_STUDIO_ENGINE}
-                katalonc -noSplash -runMode=console -projectPath="${env.KATALON_PROJECT_PATH}" -retry=0 -testSuitePath="Test Suites/TS_Prelogin" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="${API_KEY}"
-                """
+                    bat """
+                    cd ${env.KATALON_STUDIO_ENGINE}
+                    katalonc -noSplash -runMode=console -projectPath="${env.KATALON_PROJECT_PATH}" -retry=0 -testSuitePath="Test Suites/TS_Prelogin" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="${API_KEY}"
+                    """
                 }
             }
         }
     }
- 
-
-
     post {
         always {
             echo 'One way or another, I have finished'
 
-            // Collect additional information
-        def changes = currentBuild.changeSets.collect { 
-            it.items.collect { 
-                "Commit: ${it.commitId} - Message: ${it.msg}" 
-            } 
-        }.flatten().join('\n')  // Collect commit messages
+            // Initialize changes variable
+            def changes = currentBuild.changeSets.collect { changeSet ->
+                changeSet.items.collect { item ->
+                    "Commit: ${item.commitId} - Message: ${item.msg}"
+                }
+            }.flatten().join('\n')  // Collect commit messages
 
-        // Construct email body
-        def emailBody = """ 
-            Build Result: ${currentBuild.currentResult}
-            Job Name: ${env.JOB_NAME}
-            Build Number: ${env.BUILD_NUMBER}
-            More info at: ${env.BUILD_URL}
+            // Construct email body
+            def emailBody = """ 
+                Build Result: ${currentBuild.currentResult}
+                Job Name: ${env.JOB_NAME}
+                Build Number: ${env.BUILD_NUMBER}
+                More info at: ${env.BUILD_URL}
 
-            Commit Messages:
-            ${changes}
-        """
-
-
+                Commit Messages:
+                ${changes}
+            """
 
             emailext(
                 body: emailBody,
@@ -77,5 +71,4 @@
             )
         }
     }
-
 }
