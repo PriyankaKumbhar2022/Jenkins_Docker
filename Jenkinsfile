@@ -45,12 +45,36 @@
     }
  
 
- 
+
     post {
         always {
             echo 'One way or another, I have finished'
+
+            // Collect additional information
+        def changes = currentBuild.changeSets.collect { 
+            it.items.collect { 
+                "Commit: ${it.commitId} - Message: ${it.msg}" 
+            } 
+        }.flatten().join('\n')  // Collect commit messages
+
+        // Construct email body
+        def emailBody = """
+            Build Result: ${currentBuild.currentResult}
+            Job Name: ${env.JOB_NAME}
+            Build Number: ${env.BUILD_NUMBER}
+            More info at: ${env.BUILD_URL}
+
+            Commit Messages:
+            ${changes}
+
+            Last 100 Lines of Build Log:
+            ${buildLog}
+        """
+
+
+
             emailext(
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\nMore info at: ${env.BUILD_URL}",
+                body: emailBody,
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 to: 'kumbharpriyanka043@gmail.com'
             )
