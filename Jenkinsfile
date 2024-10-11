@@ -42,17 +42,23 @@
                 }
             }
         }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Your build steps here
+            }
+        }
     }
  
     post {
-    always {
-        echo 'One way or another, I have finished'
+        always {
+            echo 'One way or another, I have finished'
+            emailext(
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\nMore info at: ${env.BUILD_URL}",
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                to: 'kumbharpriyanka043@gmail.com'
+            )
+        }
     }
-    emailext {
-        body "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\nMore info at: ${env.BUILD_URL}"
-        subject "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-        to 'kumbharpriyanka043@gmail.com'
-    }
-}
 
 }
