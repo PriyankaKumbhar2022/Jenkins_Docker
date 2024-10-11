@@ -59,12 +59,12 @@ pipeline {
                 <html>
                 <body>
                     <p>Hi Team</p>
-                    <h2>Build Result: ${currentBuild.currentResult}</h2>
+                    <h1>The updated Pushed Code Build Result: ${currentBuild.currentResult}</h1>
                     <p><strong>Job Name:</strong> ${env.JOB_NAME}</p>
                     <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
                     <p><strong>More info at:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
 
-                    <h3>Commit Messages:</h3>
+                    <h2>Commit Messages:</h2>
                     <ul>
                         ${changes}
                     </ul>
@@ -75,7 +75,7 @@ pipeline {
             emailext(
                 body: emailBody,
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                to: 'kumbharpriyanka043@gmail.com',
+                to: 'Priyankak@siddhatech.com',
                 mimeType: 'text/html'  // Specify that the body is HTML
             )
         }
