@@ -59,7 +59,6 @@ pipeline {
             <body>
 
                 <p>Hi Team</p>
-
                 <h2>For the updated code Build Result is: ${currentBuild.currentResult}</h2>
                 <p><strong>Job Name:</strong> ${env.JOB_NAME}</p>
                 <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
