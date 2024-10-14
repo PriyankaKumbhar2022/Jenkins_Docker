@@ -59,7 +59,7 @@ pipeline {
             def emailBody = """ 
                 <html>
                 <body>
-                    <p>Hi Team</p>
+                    <p>Hi Team,</p>
                     <h4>The updated Pushed Code Build Result: ${currentBuild.currentResult}</h4>
                     <p>Job Name: ${env.JOB_NAME}</p>
                     <p>Build Number: ${env.BUILD_NUMBER}</p>
@@ -76,7 +76,7 @@ pipeline {
                 body: emailBody,
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 to: 'Priyankak@siddhatech.com',
-                from: "Estrella Devops <priyanka158725@gmail.com>",
+                //from: "Estrella Devops <priyanka158725@gmail.com>",
                 mimeType: 'text/html'  // Specify that the body is HTML
             )
         }
