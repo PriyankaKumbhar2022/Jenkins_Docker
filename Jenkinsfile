@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    // parameters {
-    //     string(name: 'BRANCH_NAME', defaultValue: 'feature/Priyanka', description: 'Branch to build')
-    //     string(name: 'REPO_URL', defaultValue: 'https://github.com/PriyankaKumbhar2022/Jenkins_Docker.git', description: 'Repository URL')
-    // }
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'feature/Priyanka', description: 'Branch to build')
+        string(name: 'REPO_URL', defaultValue: 'https://github.com/PriyankaKumbhar2022/Jenkins_Docker.git', description: 'Repository URL')
+    }
     // environment {
     //     KATALON_PROJECT_PATH = 'D:/JenkinsDocker/Jenkins_Docker/EStrella/EStrella.prj' 
     //     KATALON_STUDIO_ENGINE = 'C:/Users/Dell/Downloads/Katalon_Studio_Engine_Windows_64-9.6.0/Katalon_Studio_Engine_Windows_64-9.6.0'
@@ -17,7 +17,7 @@ pipeline {
         }
         stage("API key") {
             steps {
-                
+                // Use withCredentials to access MY_API_KEY
                 withCredentials([string(credentialsId: 'MY_API_KEY', variable: 'API_KEY')]) {
                     echo 'API Key has been retrieved successfully.'
                 }
@@ -26,6 +26,7 @@ pipeline {
         stage('Build') {
             steps {
                 lock('my-resource') {
+                    // Your build steps here
                     echo 'Building...'
                 }
             }
@@ -47,13 +48,14 @@ pipeline {
         echo 'One way or another, I have finished'
 
         script {
-            
+            // Initialize changes variable
             def changes = currentBuild.changeSets.collect { changeSet ->
                 changeSet.items.collect { item ->
                     "<li>Commit: ${item.commitId} - Message: ${item.msg}</li>"
                 }
-            }.flatten().join('\n')
+            }.flatten().join('\n')  // Collect commit messages
 
+            // Construct email body with HTML
             def emailBody = """ 
                 <html>
                 <body>
@@ -75,7 +77,7 @@ pipeline {
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 to: 'Priyankak@siddhatech.com',
                 from: "Estrella Devops <priyanka158725@gmail.com>",
-                mimeType: 'text/html'  
+                mimeType: 'text/html'  // Specify that the body is HTML
             )
         }
     }
