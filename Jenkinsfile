@@ -42,6 +42,7 @@ pipeline {
             }
         }
     }
+<<<<<<< HEAD
     post {
     always {
         echo 'One way or another, I have finished'
@@ -82,4 +83,47 @@ pipeline {
     }
 }
 
+=======
+   post {
+    always {
+        echo 'One way or another, I have finished'
+
+        script {
+            // Initialize changes variable
+            def changes = currentBuild.changeSets.collect { changeSet ->
+                changeSet.items.collect { item ->
+                    "<li>Commit: ${item.commitId} - Message: ${item.msg}</li>"
+                }
+            }.flatten().join('\n')  // Collect commit messages
+
+            // Construct email body with HTML
+            def emailBody = """ 
+                <html>
+                <body>
+                    <p>Hi Team</p>
+                    <h4>The updated Pushed Code Build Result: ${currentBuild.currentResult}</h4>
+                    <p>Job Name: ${env.JOB_NAME}</p>
+                    <p>Build Number: ${env.BUILD_NUMBER}</p>
+                    <p>More info at: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
+                    <h5>Commit Messages:</h5>
+                    <ul>
+                      ${changes}
+                   </ul>
+                </body>
+                </html>
+            """
+
+            emailext(
+                body: emailBody,
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                to: 'Priyankak@siddhatech.com',
+                from: "Estrella Devops <priyanka158725@gmail.com>",
+                mimeType: 'text/html'  // Specify that the body is HTML
+            )
+        }
+    }
+}
+
+
+>>>>>>> 338320e3246ec992efaa33d5756fd63a126e548c
 }
